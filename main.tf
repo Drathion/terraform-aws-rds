@@ -3,6 +3,9 @@
 
 provider "aws" {
   region = var.region
+  
+  access_key = var.aws_access_key_id
+  secret_key = var.secret_access_key
 
   default_tags {
     tags = {
@@ -105,4 +108,8 @@ resource "aws_ssm_parameter" "secret" {
   type             = "SecureString"
   value_wo         = ephemeral.random_password.db_password.result
   value_wo_version = local.db_password_version
+}
+
+output "db_endpoint" {
+  value = aws_db_instance.education.endpoint
 }
